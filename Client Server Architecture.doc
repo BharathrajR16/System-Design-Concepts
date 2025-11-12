@@ -1,0 +1,100 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset="utf-8"><style>body {font-family: Arial, sans-serif;}</style></head><body><h1>Network Architecture Study Notes: Client–Server Model</h1>
+<h2>I. Definition and Core Concepts</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Component</th>
+<th align="left">Role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Client</strong></td>
+<td align="left">Requests data, services, or resources. (e.g., Web Browser, Mobile App)</td>
+</tr>
+<tr>
+<td align="left"><strong>Server</strong></td>
+<td align="left">Provides the requested data or resources to the client. (e.g., Web API, Database)</td>
+</tr>
+<tr>
+<td align="left"><strong>Communication</strong></td>
+<td align="left">Occurs over a network (Internet, LAN).</td>
+</tr>
+</tbody></table>
+<h2>II. Operational Flow (How It Works)</h2>
+<p>The Client-Server interaction follows a standard request-response cycle:</p>
+<ol>
+<li><strong>Client Sends Request:</strong> The client initiates communication (e.g., a browser sending <code>GET /index.html</code>).</li>
+<li><strong>Server Receives:</strong> The Web Server (e.g., Apache, Nginx) receives and validates the request.</li>
+<li><strong>Server Processes:</strong> The server executes necessary logic (fetches data, runs calculations, etc.).</li>
+<li><strong>Server Sends Response:</strong> The server returns the result (e.g., HTML, JSON data, images).</li>
+<li><strong>Client Displays Result:</strong> The client renders the response for the user (e.g., displays the webpage).</li>
+</ol>
+<hr>
+<h2>III. Architecture Types (Tiers)</h2>
+<p>Client–Server models are categorized based on how the application's components (Presentation/UI, Business Logic, and Data) are distributed.</p>
+<h3>1. 1-Tier Architecture (Standalone)</h3>
+<ul>
+<li><strong>Structure:</strong> Everything is self-contained within the application (UI + Logic + Data). <strong>No remote server interaction.</strong></li>
+<li><strong>Flow:</strong> User → Application (UI + Logic + Local Database/Storage)</li>
+<li><strong>Example:</strong> A Note-taking app saving all data locally using <strong>Room Database</strong> or <strong>SQLite</strong>.</li>
+<li><strong>Limitations:</strong> Data is non-sharable and lost upon reinstallation.</li>
+</ul>
+<h3>2. 2-Tier Architecture (Direct Database Access)</h3>
+<ul>
+<li><strong>Structure:</strong> Client communicates directly with the Database Server. Business logic is often split between the client and the database (stored procedures).</li>
+<li><strong>Flow:</strong> Android App (UI + Logic) ↔ Database Server (MySQL)</li>
+<li><strong>Example:</strong> An older application connecting directly to a remote MySQL server using JDBC.</li>
+<li><strong>Security Risk:</strong> <strong>Highly Insecure.</strong> Exposes database credentials to the client, making modern use discouraged.</li>
+</ul>
+<h3>3. 3-Tier Architecture (Modern Standard)</h3>
+<ul>
+<li><strong>Structure:</strong> Introduces an intermediate <strong>Application Server (API)</strong> to manage business logic and security. The client never talks directly to the database.</li>
+<li><strong>Layers:</strong><ol>
+<li><strong>Client (Presentation Layer):</strong> UI (e.g., Android App using XML/Compose).</li>
+<li><strong>Application Server (Logic Layer):</strong> Handles business rules, validation, and authorization (e.g., REST API built with Node.js, Spring, Flask).</li>
+<li><strong>Database Server (Data Layer):</strong> Stores all persistent data (e.g., MySQL, MongoDB).</li>
+</ol>
+</li>
+<li><strong>Flow:</strong> Android App (UI) → API Server (Logic) → Database Server (Data)</li>
+<li><strong>Example:</strong> An E-commerce app using <strong>Retrofit</strong> to call a RESTful API, which then interacts with the database.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Tier</th>
+<th align="left">Components</th>
+<th align="left">Typical Android Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>1-Tier</strong></td>
+<td align="left">App = UI + Logic + Data</td>
+<td align="left">Local Notes App (using Room/SQLite)</td>
+</tr>
+<tr>
+<td align="left"><strong>2-Tier</strong></td>
+<td align="left">App ↔ Database</td>
+<td align="left">Simple record app connecting directly via IP</td>
+</tr>
+<tr>
+<td align="left"><strong>3-Tier</strong></td>
+<td align="left">App ↔ API ↔ Database</td>
+<td align="left">E-Commerce App using Retrofit + Node.js API</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>IV. Advantages and Disadvantages</h2>
+<h3>✅ Advantages</h3>
+<ul>
+<li><strong>Centralization:</strong> Easier to manage and backup data from a single server location.</li>
+<li><strong>Maintenance:</strong> Server software can be updated or maintained without affecting client software.</li>
+<li><strong>Security:</strong> Data and business logic can be secured on the server side (especially in 3-Tier).</li>
+<li><strong>Scalability:</strong> Resources (storage, processing power) can be upgraded on the server independently.</li>
+</ul>
+<h3>❌ Disadvantages</h3>
+<ul>
+<li><strong>Network Dependency:</strong> A constant network connection is mandatory for operation.</li>
+<li><strong>Server Single Point of Failure:</strong> If the primary server crashes, all connected clients lose access.</li>
+<li><strong>Performance Bottleneck:</strong> High traffic can lead to <strong>server overload</strong>, slowing response times for all users.</li>
+</ul>
+</body></html>
